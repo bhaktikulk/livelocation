@@ -45,16 +45,19 @@ function App() {
     return null;
   }
 
-  const getCoordinates = async (location: string) => {
-    const response = await axios.get(
-      `https://livelocation-back.vercel.app/`
-    );
-    if (response.data.length === 0) throw new Error("Invalid location");
-    return {
-      lat: parseFloat(response.data[0].lat),
-      lng: parseFloat(response.data[0].lon),
-    };
+ const BACKEND_URL = "https://livelocation-back.vercel.app"; // Your deployed backend URL
+
+const getCoordinates = async (location: string) => {
+  const response = await axios.get(`${BACKEND_URL}/geocode?location=${encodeURIComponent(location)}`);
+
+  if (!response.data.lat || !response.data.lng) throw new Error("Invalid location");
+
+  return {
+    lat: response.data.lat,
+    lng: response.data.lng,
   };
+};
+
 
 
   // Calculate distance and draw route
