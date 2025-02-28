@@ -988,16 +988,14 @@ function App() {
   }
 
   // Get coordinates from a location string
-  const getCoordinates = async (location: string) => {
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
-    );
-    if (response.data.length === 0) throw new Error("Invalid location");
-    return {
-      lat: parseFloat(response.data[0].lat),
-      lng: parseFloat(response.data[0].lon),
-    };
-  };
+ const getCoordinates = async (location: string) => {
+  const response = await axios.get(
+    `https://livelocation-back.vercel.app/geocode?location=${location}`
+  );
+  if (!response.data || response.data.length === 0) throw new Error("Invalid location");
+  return response.data; // Assuming backend returns { lat, lng }
+};
+
 
   // Calculate distance and draw route
   const calculateDistance = async () => {
