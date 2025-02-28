@@ -47,7 +47,7 @@ function App() {
 
   const getCoordinates = async (location: string) => {
     const response = await axios.get(
-      `https://livelocation-back.vercel.app/geocode?location=${location}`
+      `https://livelocation-back.vercel.app/`
     );
     if (response.data.length === 0) throw new Error("Invalid location");
     return {
